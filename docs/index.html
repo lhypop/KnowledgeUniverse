@@ -72,17 +72,94 @@ nav button.active { background: var(--bg3); color: var(--accent); }
 
 .preview-section { margin-top: 40px; }
 .preview-section h3 { font-size: 0.95em; color: var(--text2); margin-bottom: 16px; font-weight: 500; }
-.preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
 .preview-card {
   background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 18px; transition: var(--transition);
+  padding: 18px; transition: var(--transition); cursor: pointer; position: relative;
 }
-.preview-card:hover { border-color: var(--accent); }
-.preview-card .prev-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.preview-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
+.preview-card .prev-header { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
 .preview-card .prev-title { font-weight: 600; font-size: 0.9em; line-height: 1.4; }
-.preview-card .prev-meta { font-size: 0.78em; color: var(--text2); margin-bottom: 6px; display: flex; gap: 8px; }
+.preview-card .prev-meta { font-size: 0.78em; color: var(--text2); margin-bottom: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
 .preview-card .prev-authors { font-size: 0.8em; color: var(--text2); margin-bottom: 8px; }
-.preview-card .prev-summary { font-size: 0.82em; background: var(--bg3); padding: 10px 12px; border-radius: 6px; color: var(--text); line-height: 1.5; }
+.preview-card .prev-summary {
+  font-size: 0.82em; background: var(--bg3); padding: 10px 12px;
+  border-radius: 6px; color: var(--text); line-height: 1.5;
+}
+.preview-card .star-btn {
+  background: none; border: none; color: var(--text2); cursor: pointer;
+  font-size: 1.1em; padding: 2px 4px; transition: var(--transition); flex-shrink: 0;
+  line-height: 1;
+}
+.preview-card .star-btn:hover { transform: scale(1.2); }
+.preview-card .star-btn.starred { color: var(--accent); }
+.preview-card .card-actions { display: flex; gap: 6px; margin-top: 10px; align-items: center; }
+.btn-sm {
+  padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg3); color: var(--text2); cursor: pointer;
+  font-size: 0.78em; transition: var(--transition);
+}
+.btn-sm:hover { border-color: var(--accent); color: var(--text); }
+.btn-sm.danger { color: var(--red); border-color: transparent; }
+.btn-sm.danger:hover { border-color: var(--red); background: rgba(224,85,96,0.1); }
+
+.card-detail {
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+  display: none;
+}
+.card-detail.open { display: block; }
+.card-detail .abstract {
+  font-size: 0.82em; line-height: 1.7; color: var(--text); margin-bottom: 10px;
+  background: var(--bg); padding: 12px; border-radius: 6px;
+}
+.card-detail .findings {
+  font-size: 0.8em; color: var(--green); margin-bottom: 10px;
+}
+.card-detail .links { display: flex; gap: 8px; margin-bottom: 10px; }
+.card-detail .rate-row { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+.card-detail .rate-btn {
+  background: none; border: none; color: var(--text2); cursor: pointer;
+  font-size: 1em; padding: 2px; transition: var(--transition);
+}
+.card-detail .rate-btn:hover { transform: scale(1.2); }
+.card-detail .rate-btn.active { color: var(--accent); }
+.card-detail .note-input {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); padding: 8px 10px;
+  font-family: inherit; font-size: 0.8em; resize: vertical; min-height: 50px;
+  margin-bottom: 6px;
+}
+.card-detail .note-input:focus { outline: none; border-color: var(--accent); }
+
+.customize-bar {
+  display: flex; gap: 10px; align-items: center; margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.customize-bar input, .customize-bar select {
+  padding: 8px 12px; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: 0.85em;
+}
+.customize-bar input:focus, .customize-bar select:focus { outline: none; border-color: var(--accent); }
+
+.add-paper-form {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 20px; display: none;
+}
+.add-paper-form.open { display: block; }
+.add-paper-form .form-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.add-paper-form input, .add-paper-form textarea, .add-paper-form select {
+  padding: 8px 12px; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-size: 0.85em; font-family: inherit;
+}
+.add-paper-form input:focus, .add-paper-form textarea:focus { outline: none; border-color: var(--accent); }
+
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 2000;
+  padding: 10px 18px; border-radius: var(--radius); font-size: 0.85em;
+  color: #fff; animation: slideUp 0.3s ease; background: var(--green);
+  box-shadow: var(--shadow);
+}
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .badge { font-size: 0.72em; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
 .badge-new { background: rgba(240,160,64,0.15); color: var(--accent); }
 .badge-read { background: rgba(92,184,112,0.15); color: var(--green); }
@@ -121,7 +198,7 @@ nav button.active { background: var(--bg3); color: var(--accent); }
 
   <div class="banner">
     <span class="icon">⚡</span>
-    <span>这是 <strong>静态预览版</strong>。完整功能请运行 <span class="code">python server.py</span>，或查看 <a href="https://github.com/lhypop/KnowledgeUniverse" target="_blank">GitHub</a></span>
+    <span>这是 <strong>交互式预览版</strong>。完整功能请运行 <span class="code">python server.py</span> · <a href="https://github.com/lhypop/KnowledgeUniverse" target="_blank">GitHub</a></span>
   </div>
 
   <div id="view-papers">
@@ -130,39 +207,45 @@ nav button.active { background: var(--bg3); color: var(--accent); }
       <h3>文献库为空</h3>
       <p>启动本地服务后，添加 arXiv 订阅即可自动获取论文</p>
     </div>
-
     <div class="features">
-      <div class="feature-card"><div class="feat-icon">📄</div><div class="feat-title">文献获取</div><div class="feat-desc">支持关键词、分类、作者三种订阅方式，自动从 arXiv 拉取</div></div>
+      <div class="feature-card"><div class="feat-icon">📄</div><div class="feat-title">文献获取</div><div class="feat-desc">关键词、分类、作者三种订阅，自动从 arXiv 拉取</div></div>
       <div class="feature-card"><div class="feat-icon">🤖</div><div class="feat-title">AI 总结</div><div class="feat-desc">LLM 自动生成中文摘要和关键发现</div></div>
       <div class="feature-card"><div class="feat-icon">🔗</div><div class="feat-title">关联组织</div><div class="feat-desc">论文间建立引用/构建关系，形成知识图谱</div></div>
       <div class="feature-card"><div class="feat-icon">📝</div><div class="feat-title">Obsidian 集成</div><div class="feat-desc">一键导出论文笔记到 Obsidian Vault</div></div>
     </div>
 
     <div class="preview-section">
-      <h3>📄 论文库界面预览</h3>
-      <div class="preview-grid">
-        <div class="preview-card">
-          <div class="prev-header"><div class="prev-title">Attention Is All You Need</div><span style="color:var(--accent)">⭐</span></div>
-          <div class="prev-meta"><span class="badge badge-read">已读</span><span class="badge badge-arxiv">cs.CL</span><span>2017-06-12</span><span>引用 138K</span></div>
-          <div class="prev-authors">Ashish Vaswani, Noam Shazeer, Niki Parmar et al.</div>
-          <div class="prev-summary">提出 Transformer 架构，完全基于注意力机制。在机器翻译任务上达到 SOTA，训练速度大幅提升。</div>
-          <div style="margin-top:8px"><span class="tag">Transformer</span> <span class="tag">NLP</span></div>
+      <div class="customize-bar">
+        <h3 style="font-size:0.95em;color:var(--text2);font-weight:500;margin:0">📄 预览面板</h3>
+        <span style="flex:1"></span>
+        <button class="btn-sm" onclick="toggleAddForm()" id="btn-add">+ 添加论文</button>
+        <button class="btn-sm" onclick="resetPapers()">🔄 恢复默认</button>
+      </div>
+
+      <div class="add-paper-form" id="add-form">
+        <div class="form-row">
+          <input type="text" id="pf-title" placeholder="论文标题" style="flex:3" />
+          <input type="text" id="pf-arxiv" placeholder="arXiv ID" style="flex:1" />
         </div>
-        <div class="preview-card">
-          <div class="prev-header"><div class="prev-title">LLaMA: Open and Efficient Foundation Language Models</div><span style="color:var(--accent)">⭐</span></div>
-          <div class="prev-meta"><span class="badge badge-read">已读</span><span class="badge badge-arxiv">cs.CL</span><span>2023-02-27</span><span>引用 15K</span></div>
-          <div class="prev-authors">Hugo Touvron, Thibaut Lavril, Gautier Izacard et al.</div>
-          <div class="prev-summary">Meta 开源的 LLaMA 系列。13B 的 LLaMA 在多数 benchmark 上超越 GPT-3 175B。</div>
-          <div style="margin-top:8px"><span class="tag">LLaMA</span> <span class="tag">开源</span></div>
+        <div class="form-row">
+          <input type="text" id="pf-authors" placeholder="作者 (逗号分隔)" style="flex:2" />
+          <input type="text" id="pf-category" placeholder="分类 (如 cs.CL)" style="flex:1" />
+          <input type="text" id="pf-date" placeholder="日期" style="flex:1" />
         </div>
-        <div class="preview-card">
-          <div class="prev-header"><div class="prev-title">Chain-of-Thought Prompting Elicits Reasoning</div><span style="opacity:0.3">☆</span></div>
-          <div class="prev-meta"><span class="badge badge-read">已读</span><span class="badge badge-arxiv">cs.CL</span><span>2022-01-28</span><span>引用 9.8K</span></div>
-          <div class="prev-authors">Jason Wei, Xuezhi Wang, Dale Schuurmans et al.</div>
-          <div class="prev-summary">提出思维链提示方法，显著提升 LLM 在算术和推理任务上的表现。</div>
-          <div style="margin-top:8px"><span class="tag">CoT</span> <span class="tag">推理</span></div>
+        <div class="form-row">
+          <textarea id="pf-abstract" placeholder="摘要" rows="3" style="flex:1"></textarea>
+        </div>
+        <div class="form-row">
+          <input type="text" id="pf-tags" placeholder="标签 (逗号分隔)" style="flex:2" />
+          <input type="text" id="pf-findings" placeholder="关键发现 (分号分隔)" style="flex:2" />
+        </div>
+        <div class="form-row">
+          <button class="btn-sm" onclick="addCustomPaper()" style="background:var(--accent);color:#000;border:none;font-weight:600">✅ 添加</button>
+          <button class="btn-sm" onclick="toggleAddForm()">取消</button>
         </div>
       </div>
+
+      <div class="preview-grid" id="preview-grid"></div>
     </div>
   </div>
 
@@ -192,14 +275,119 @@ nav button.active { background: var(--bg3); color: var(--accent); }
 </div>
 
 <script>
+var DEFAULT_PAPERS = [
+  {id:'d1', title:'Attention Is All You Need', authors:'Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez', category:'cs.CL', date:'2017-06-12', citations:138000, summary:'提出 Transformer 架构，完全基于注意力机制，摒弃循环和卷积。在机器翻译任务上达到 SOTA，训练速度大幅提升。', abstract:'The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms.', tags:'Transformer,NLP,里程碑', findings:'自注意力替代 RNN;训练并行化加速10x+;WMT英德28.4 BLEU', starred:true, rating:5, note:'', status:'read'},
+  {id:'d2', title:'LLaMA: Open and Efficient Foundation Language Models', authors:'Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux', category:'cs.CL', date:'2023-02-27', citations:15000, summary:'Meta 开源的 LLaMA 系列，仅使用公开数据训练。13B 超越 GPT-3 175B，开启开源 LLM 时代。', abstract:'We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively.', tags:'LLaMA,开源,LLM', findings:'仅公开数据训练SOTA;13B超GPT-3 175B;Chinchilla定律验证', starred:true, rating:5, note:'', status:'read'},
+  {id:'d3', title:'Chain-of-Thought Prompting Elicits Reasoning in LLMs', authors:'Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia', category:'cs.CL', date:'2022-01-28', citations:9800, summary:'提出思维链提示方法，通过在 prompt 中提供中间推理步骤，显著提升算术和推理任务表现。', abstract:'We explore how generating a chain of thought--a series of intermediate reasoning steps--significantly improves the ability of large language models to perform complex reasoning.', tags:'CoT,推理,Prompting', findings:'数学推理提升2-3x;中间推理步骤关键;Few-shot CoT最优', starred:false, rating:4, note:'', status:'read'},
+  {id:'d4', title:'LoRA: Low-Rank Adaptation of Large Language Models', authors:'Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li', category:'cs.CL', date:'2021-06-17', citations:12000, summary:'参数高效微调方法，冻结预训练权重仅训练低秩矩阵，可训练参数减少10000x，无推理延迟。', abstract:'We propose Low-Rank Adaptation (LoRA), which freezes the pretrained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture.', tags:'LoRA,PEFT,微调', findings:'低秩替代全参数微调;参数减10000x;无推理开销', starred:true, rating:4, note:'', status:'read'},
+  {id:'d5', title:"Let's Verify Step by Step", authors:'Hunter Lightman, Vineet Kosaraju, Yura Burda, Harri Edwards, Bowen Baker', category:'cs.LG', date:'2023-05-31', citations:1200, summary:'过程监督方法，对推理每一步验证而非仅最终结果。MATH 数据集准确率从 50% 提升到 78.2%。', abstract:'We investigate outcome-supervised and process-supervised reward models for mathematical reasoning. We find that process supervision significantly outperforms outcome supervision.', tags:'Process Reward,RLHF,数学', findings:'过程监督优于结果监督;MATH 50%→78%;每步标注可行', starred:false, rating:3, note:'', status:'new'},
+  {id:'d6', title:'Training Compute-Optimal Large Language Models', authors:'Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya', category:'cs.CL', date:'2022-03-29', citations:4200, summary:'Chinchilla 缩放定律：模型参数和数据应等比例缩放。70B Chinchilla 超越 280B Gopher。', abstract:'We investigate the optimal model size and number of tokens for training a transformer language model under a given compute budget. Current large language models are significantly undertrained.', tags:'Scaling Law,Chinchilla', findings:'参数和数据等比例增长;70B超280B;大模型普遍训练不足', starred:true, rating:5, note:'', status:'read'}
+];
+
+var papers = [];
+var currentTab = 'papers';
+
+function esc(s) {
+  if (!s || typeof s !== 'string') return '';
+  var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+function toast(msg) {
+  var t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 2000);
+}
+
+var STORE_KEY = 'ku_demo_papers';
+function loadPapers() {
+  try { var raw = localStorage.getItem(STORE_KEY); papers = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(DEFAULT_PAPERS)); }
+  catch(e) { papers = JSON.parse(JSON.stringify(DEFAULT_PAPERS)); }
+}
+function savePapers() { try { localStorage.setItem(STORE_KEY, JSON.stringify(papers)); } catch(e) {} }
+function resetPapers() { papers = JSON.parse(JSON.stringify(DEFAULT_PAPERS)); savePapers(); renderGrid(); toast('已恢复默认'); }
+
+function renderGrid() {
+  var grid = document.getElementById('preview-grid');
+  if (papers.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--text2);padding:40px;grid-column:1/-1">点击 "+ 添加论文" 或 "🔄 恢复默认"</p>';
+    return;
+  }
+  grid.innerHTML = papers.map(function(p, i) {
+    var authList = (p.authors || '').split(',').map(function(a){ return a.trim(); });
+    var shortAuthors = authList.slice(0, 3).join(', ') + (authList.length > 3 ? ' et al.' : '');
+    var tags = (p.tags || '').split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+    var findings = (p.findings || '').split(';').map(function(f){ return f.trim(); }).filter(Boolean);
+    var starCls = p.starred ? 'starred' : '';
+    var starIcon = p.starred ? '⭐' : '☆';
+    return '<div class="preview-card" id="card-'+i+'">'+
+      '<div class="prev-header">'+
+      '<div class="prev-title" onclick="event.stopPropagation();toggleCard('+i+')">'+esc(p.title)+'</div>'+
+      '<button class="star-btn '+starCls+'" onclick="event.stopPropagation();toggleStar('+i+')" title="收藏">'+starIcon+'</button></div>'+
+      '<div class="prev-meta">'+
+      '<span class="badge badge-'+(p.status==='new'?'new':'read')+'">'+(p.status==='new'?'未读':'已读')+'</span>'+
+      (p.category?'<span class="badge badge-arxiv">'+esc(p.category)+'</span>':'')+
+      '<span>'+(p.date||'')+'</span>'+
+      (p.citations?'<span>引用 '+(p.citations>999?Math.round(p.citations/1000)+'K':p.citations)+'</span>':'')+
+      (p.rating?'<span>'+'★'.repeat(p.rating)+'☆'.repeat(5-p.rating)+'</span>':'')+'</div>'+
+      (shortAuthors?'<div class="prev-authors" onclick="event.stopPropagation();toggleCard('+i+')">'+esc(shortAuthors)+'</div>':'')+
+      '<div class="prev-summary" onclick="event.stopPropagation();toggleCard('+i+')">'+esc(p.summary||'')+'</div>'+
+      (tags.length?'<div style="margin-top:8px">'+tags.map(function(t){return'<span class="tag">'+esc(t)+'</span>';}).join(' ')+'</div>':'')+
+      '<div class="card-detail" id="detail-'+i+'">'+
+      (p.abstract?'<div class="abstract"><strong>摘要</strong><br>'+esc(p.abstract)+'</div>':'')+
+      (findings.length?'<div class="findings">🔑 关键发现: '+findings.map(esc).join('；')+'</div>':'')+
+      '<div class="rate-row"><span style="font-size:0.8em;color:var(--text2);margin-right:4px">评分:</span>'+
+      [1,2,3,4,5].map(function(r){return'<button class="rate-btn '+(r<=(p.rating||0)?'active':'')+'" onclick="event.stopPropagation();ratePaper('+i+','+r+')">'+(r<=(p.rating||0)?'★':'☆')+'</button>';}).join('')+'</div>'+
+      '<textarea class="note-input" placeholder="写笔记..." onchange="saveNote('+i+',this.value)" onclick="event.stopPropagation()">'+esc(p.note||'')+'</textarea></div>'+
+      '<div class="card-actions">'+
+      '<button class="btn-sm" onclick="event.stopPropagation();toggleCard('+i+')" id="expand-btn-'+i+'">📖 展开</button>'+
+      '<button class="btn-sm" onclick="event.stopPropagation();toggleStatus('+i+')">'+(p.status==='new'?'✅ 已读':'🔄 未读')+'</button>'+
+      '<span style="flex:1"></span>'+
+      '<button class="btn-sm danger" onclick="event.stopPropagation();removePaper('+i+')" title="移除">✕</button></div></div>';
+  }).join('');
+}
+
+function toggleCard(i) {
+  var d = document.getElementById('detail-'+i), b = document.getElementById('expand-btn-'+i);
+  if (!d||!b) return;
+  if (d.classList.contains('open')) { d.classList.remove('open'); b.textContent='📖 展开'; }
+  else { d.classList.add('open'); b.textContent='📕 收起'; }
+}
+function toggleStar(i) { papers[i].starred=!papers[i].starred; savePapers(); renderGrid(); toast(papers[i].starred?'⭐ 已收藏':'已取消收藏'); }
+function ratePaper(i,r) { papers[i].rating=r; savePapers(); renderGrid(); toast('评分: '+'★'.repeat(r)); }
+function saveNote(i,v) { papers[i].note=v; savePapers(); }
+function toggleStatus(i) { papers[i].status=papers[i].status==='new'?'read':'new'; savePapers(); renderGrid(); }
+function removePaper(i) { papers.splice(i,1); savePapers(); renderGrid(); toast('已移除'); }
+
+function toggleAddForm() {
+  var f=document.getElementById('add-form'), b=document.getElementById('btn-add');
+  f.classList.toggle('open'); b.textContent=f.classList.contains('open')?'✕ 取消':'+ 添加论文';
+}
+function addCustomPaper() {
+  var t=document.getElementById('pf-title').value.trim();
+  if(!t){toast('标题不能为空');return;}
+  papers.unshift({
+    id:'custom_'+Date.now(), title:t, arxiv:document.getElementById('pf-arxiv').value.trim(),
+    authors:document.getElementById('pf-authors').value.trim(), category:document.getElementById('pf-category').value.trim(),
+    date:document.getElementById('pf-date').value.trim(), abstract:document.getElementById('pf-abstract').value.trim(),
+    summary:'', tags:document.getElementById('pf-tags').value.trim(), findings:document.getElementById('pf-findings').value.trim(),
+    citations:0, starred:false, rating:0, note:'', status:'new'
+  });
+  savePapers(); renderGrid(); toggleAddForm();
+  ['pf-title','pf-arxiv','pf-authors','pf-category','pf-date','pf-abstract','pf-tags','pf-findings'].forEach(function(id){document.getElementById(id).value='';});
+  toast('✅ 论文已添加');
+}
+
 document.querySelectorAll('nav button').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('nav button').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
+    currentTab = btn.dataset.tab;
     document.querySelectorAll('[id^="view-"]').forEach(function(v) { v.classList.add('hidden'); });
-    document.getElementById('view-' + btn.dataset.tab).classList.remove('hidden');
+    document.getElementById('view-' + currentTab).classList.remove('hidden');
   });
 });
+
+loadPapers(); renderGrid();
 </script>
 </body>
 </html>
