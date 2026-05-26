@@ -6,18 +6,55 @@
 <title>Knowledge Universe — 文献知识宇宙</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
+:root,
+[data-theme="amber"] {
   --bg: #0c0f14; --bg2: #151922; --bg3: #1e2330; --border: #2a3040;
   --text: #e2e4e9; --text2: #8a8f9a; --accent: #f0a040; --green: #5cb870;
   --yellow: #e8b430; --red: #e05560; --purple: #a080d0;
   --radius: 10px; --shadow: 0 4px 32px rgba(0,0,0,0.5); --transition: 0.2s ease;
+  --bg-glow-1: rgba(240,160,64,0.04); --bg-glow-2: rgba(240,160,64,0.03);
+  --banner-grad-1: rgba(240,160,64,0.08); --banner-grad-2: rgba(240,160,64,0.03);
+  --banner-border: rgba(240,160,64,0.15);
+}
+[data-theme="blue"] {
+  --bg: #0a0f1a; --bg2: #111827; --bg3: #1a2332; --border: #243044;
+  --text: #e0e6f0; --text2: #8899b0; --accent: #60a5fa; --green: #4ade80;
+  --yellow: #facc15; --red: #f87171; --purple: #a78bfa;
+  --bg-glow-1: rgba(96,165,250,0.04); --bg-glow-2: rgba(96,165,250,0.02);
+  --banner-grad-1: rgba(96,165,250,0.08); --banner-grad-2: rgba(96,165,250,0.03);
+  --banner-border: rgba(96,165,250,0.15);
+}
+[data-theme="forest"] {
+  --bg: #0c1410; --bg2: #141e18; --bg3: #1a2a20; --border: #243830;
+  --text: #dce8e0; --text2: #88a090; --accent: #4ade80; --green: #22c55e;
+  --yellow: #a3e635; --red: #f87171; --purple: #c4b5fd;
+  --bg-glow-1: rgba(74,222,128,0.04); --bg-glow-2: rgba(74,222,128,0.02);
+  --banner-grad-1: rgba(74,222,128,0.08); --banner-grad-2: rgba(74,222,128,0.03);
+  --banner-border: rgba(74,222,128,0.15);
+}
+[data-theme="light"] {
+  --bg: #f5f5f7; --bg2: #ffffff; --bg3: #eaeaec; --border: #d4d4d8;
+  --text: #1a1a2e; --text2: #6b7280; --accent: #d97706; --green: #059669;
+  --yellow: #d97706; --red: #dc2626; --purple: #7c3aed;
+  --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  --bg-glow-1: transparent; --bg-glow-2: transparent;
+  --banner-grad-1: rgba(217,119,6,0.06); --banner-grad-2: transparent;
+  --banner-border: rgba(217,119,6,0.12);
+}
+[data-theme="cyber"] {
+  --bg: #0d0a1a; --bg2: #150f28; --bg3: #1f1538; --border: #2d1f4e;
+  --text: #ede4ff; --text2: #9488c0; --accent: #c084fc; --green: #34d399;
+  --yellow: #fbbf24; --red: #fb7185; --purple: #a78bfa;
+  --bg-glow-1: rgba(192,132,252,0.05); --bg-glow-2: rgba(192,132,252,0.03);
+  --banner-grad-1: rgba(192,132,252,0.08); --banner-grad-2: rgba(192,132,252,0.03);
+  --banner-border: rgba(192,132,252,0.15);
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
   background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh;
   background-image:
-    radial-gradient(ellipse at 15% 5%, rgba(240,160,64,0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 95%, rgba(240,160,64,0.03) 0%, transparent 50%);
+    radial-gradient(ellipse at 15% 5%, var(--bg-glow-1) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 95%, var(--bg-glow-2) 0%, transparent 50%);
 }
 a { color: var(--accent); text-decoration: none; font-weight: 500; }
 a:hover { text-decoration: underline; }
@@ -41,8 +78,8 @@ nav button:hover { color: var(--text); }
 nav button.active { background: var(--bg3); color: var(--accent); }
 
 .banner {
-  background: linear-gradient(135deg, rgba(240,160,64,0.08), rgba(240,160,64,0.03));
-  border: 1px solid rgba(240,160,64,0.15); border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--banner-grad-1), var(--banner-grad-2));
+  border: 1px solid var(--banner-border); border-radius: var(--radius);
   padding: 18px 24px; margin-bottom: 28px; font-size: 0.9em; color: var(--text2);
   display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
 }
@@ -166,6 +203,21 @@ nav button.active { background: var(--bg3); color: var(--accent); }
 .badge-arxiv { background: rgba(160,128,208,0.15); color: var(--purple); }
 .tag { font-size: 0.72em; padding: 2px 8px; background: var(--bg3); border-radius: 10px; color: var(--purple); }
 
+.theme-picker {
+  display: flex; gap: 4px; background: var(--bg2); border-radius: var(--radius); padding: 3px;
+}
+.theme-picker button {
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent;
+  cursor: pointer; transition: var(--transition); padding: 0;
+}
+.theme-picker button:hover { transform: scale(1.15); }
+.theme-picker button.active { border-color: var(--text); box-shadow: 0 0 8px var(--accent); }
+.theme-picker .t-amber { background: linear-gradient(135deg, #f0a040, #d97706); }
+.theme-picker .t-blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+.theme-picker .t-forest { background: linear-gradient(135deg, #4ade80, #22c55e); }
+.theme-picker .t-light { background: linear-gradient(135deg, #e5e5e5, #d4d4d4); }
+.theme-picker .t-cyber { background: linear-gradient(135deg, #c084fc, #a855f7); }
+
 .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 16px; }
 .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
 .stat-card .stat-val { font-size: 1.8em; font-weight: 700; color: var(--accent); }
@@ -194,6 +246,13 @@ nav button.active { background: var(--bg3); color: var(--accent); }
       <button data-tab="subscriptions">📡 订阅</button>
       <button data-tab="stats">📊 统计</button>
     </nav>
+    <div class="theme-picker" id="theme-picker">
+      <button class="t-amber active" data-theme="amber" title="琥珀暗夜"></button>
+      <button class="t-blue" data-theme="blue" title="深蓝学术"></button>
+      <button class="t-forest" data-theme="forest" title="墨绿经典"></button>
+      <button class="t-cyber" data-theme="cyber" title="赛博紫"></button>
+      <button class="t-light" data-theme="light" title="极简灰白"></button>
+    </div>
   </header>
 
   <div class="banner">
@@ -205,7 +264,7 @@ nav button.active { background: var(--bg3); color: var(--accent); }
     <div class="empty-state">
       <div class="empty-icon">📭</div>
       <h3>文献库为空</h3>
-      <p>启动本地服务后，添加 arXiv 订阅即可自动获取论文</p>
+      <p>点击「+ 添加论文」录入文献，或启动本地服务连接 arXiv</p>
     </div>
     <div class="features">
       <div class="feature-card"><div class="feat-icon">📄</div><div class="feat-title">文献获取</div><div class="feat-desc">关键词、分类、作者三种订阅，自动从 arXiv 拉取</div></div>
@@ -219,7 +278,7 @@ nav button.active { background: var(--bg3); color: var(--accent); }
         <h3 style="font-size:0.95em;color:var(--text2);font-weight:500;margin:0">📄 预览面板</h3>
         <span style="flex:1"></span>
         <button class="btn-sm" onclick="toggleAddForm()" id="btn-add">+ 添加论文</button>
-        <button class="btn-sm" onclick="resetPapers()">🔄 恢复默认</button>
+        <button class="btn-sm" onclick="resetPapers()">🗑️ 清空</button>
       </div>
 
       <div class="add-paper-form" id="add-form">
@@ -275,14 +334,7 @@ nav button.active { background: var(--bg3); color: var(--accent); }
 </div>
 
 <script>
-var DEFAULT_PAPERS = [
-  {id:'d1', title:'Attention Is All You Need', authors:'Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez', category:'cs.CL', date:'2017-06-12', citations:138000, summary:'提出 Transformer 架构，完全基于注意力机制，摒弃循环和卷积。在机器翻译任务上达到 SOTA，训练速度大幅提升。', abstract:'The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms.', tags:'Transformer,NLP,里程碑', findings:'自注意力替代 RNN;训练并行化加速10x+;WMT英德28.4 BLEU', starred:true, rating:5, note:'', status:'read'},
-  {id:'d2', title:'LLaMA: Open and Efficient Foundation Language Models', authors:'Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux', category:'cs.CL', date:'2023-02-27', citations:15000, summary:'Meta 开源的 LLaMA 系列，仅使用公开数据训练。13B 超越 GPT-3 175B，开启开源 LLM 时代。', abstract:'We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively.', tags:'LLaMA,开源,LLM', findings:'仅公开数据训练SOTA;13B超GPT-3 175B;Chinchilla定律验证', starred:true, rating:5, note:'', status:'read'},
-  {id:'d3', title:'Chain-of-Thought Prompting Elicits Reasoning in LLMs', authors:'Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia', category:'cs.CL', date:'2022-01-28', citations:9800, summary:'提出思维链提示方法，通过在 prompt 中提供中间推理步骤，显著提升算术和推理任务表现。', abstract:'We explore how generating a chain of thought--a series of intermediate reasoning steps--significantly improves the ability of large language models to perform complex reasoning.', tags:'CoT,推理,Prompting', findings:'数学推理提升2-3x;中间推理步骤关键;Few-shot CoT最优', starred:false, rating:4, note:'', status:'read'},
-  {id:'d4', title:'LoRA: Low-Rank Adaptation of Large Language Models', authors:'Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li', category:'cs.CL', date:'2021-06-17', citations:12000, summary:'参数高效微调方法，冻结预训练权重仅训练低秩矩阵，可训练参数减少10000x，无推理延迟。', abstract:'We propose Low-Rank Adaptation (LoRA), which freezes the pretrained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture.', tags:'LoRA,PEFT,微调', findings:'低秩替代全参数微调;参数减10000x;无推理开销', starred:true, rating:4, note:'', status:'read'},
-  {id:'d5', title:"Let's Verify Step by Step", authors:'Hunter Lightman, Vineet Kosaraju, Yura Burda, Harri Edwards, Bowen Baker', category:'cs.LG', date:'2023-05-31', citations:1200, summary:'过程监督方法，对推理每一步验证而非仅最终结果。MATH 数据集准确率从 50% 提升到 78.2%。', abstract:'We investigate outcome-supervised and process-supervised reward models for mathematical reasoning. We find that process supervision significantly outperforms outcome supervision.', tags:'Process Reward,RLHF,数学', findings:'过程监督优于结果监督;MATH 50%→78%;每步标注可行', starred:false, rating:3, note:'', status:'new'},
-  {id:'d6', title:'Training Compute-Optimal Large Language Models', authors:'Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya', category:'cs.CL', date:'2022-03-29', citations:4200, summary:'Chinchilla 缩放定律：模型参数和数据应等比例缩放。70B Chinchilla 超越 280B Gopher。', abstract:'We investigate the optimal model size and number of tokens for training a transformer language model under a given compute budget. Current large language models are significantly undertrained.', tags:'Scaling Law,Chinchilla', findings:'参数和数据等比例增长;70B超280B;大模型普遍训练不足', starred:true, rating:5, note:'', status:'read'}
-];
+var DEFAULT_PAPERS = [];
 
 var papers = [];
 var currentTab = 'papers';
@@ -301,15 +353,21 @@ function toast(msg) {
 var STORE_KEY = 'ku_demo_papers';
 function loadPapers() {
   try { var raw = localStorage.getItem(STORE_KEY); papers = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(DEFAULT_PAPERS)); }
-  catch(e) { papers = JSON.parse(JSON.stringify(DEFAULT_PAPERS)); }
+  catch(e) { papers = []; }
 }
 function savePapers() { try { localStorage.setItem(STORE_KEY, JSON.stringify(papers)); } catch(e) {} }
-function resetPapers() { papers = JSON.parse(JSON.stringify(DEFAULT_PAPERS)); savePapers(); renderGrid(); toast('已恢复默认'); }
+function resetPapers() {
+  papers = [];
+  savePapers();
+  localStorage.removeItem(STORE_KEY);
+  renderGrid();
+  toast('已清空');
+}
 
 function renderGrid() {
   var grid = document.getElementById('preview-grid');
   if (papers.length === 0) {
-    grid.innerHTML = '<p style="text-align:center;color:var(--text2);padding:40px;grid-column:1/-1">点击 "+ 添加论文" 或 "🔄 恢复默认"</p>';
+    grid.innerHTML = '<p style="text-align:center;color:var(--text2);padding:40px;grid-column:1/-1">点击「+ 添加论文」录入你的第一篇文献</p>';
     return;
   }
   grid.innerHTML = papers.map(function(p, i) {
@@ -388,6 +446,20 @@ document.querySelectorAll('nav button').forEach(function(btn) {
 });
 
 loadPapers(); renderGrid();
+
+var THEME_KEY = 'ku_demo_theme';
+function setTheme(name) {
+  document.documentElement.setAttribute('data-theme', name);
+  document.querySelectorAll('.theme-picker button').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.theme === name);
+  });
+  try { localStorage.setItem(THEME_KEY, name); } catch(e) {}
+}
+document.querySelectorAll('.theme-picker button').forEach(function(b) {
+  b.addEventListener('click', function() { setTheme(this.dataset.theme); });
+});
+var savedTheme = (function(){ try { return localStorage.getItem(THEME_KEY); } catch(e) { return null; } })();
+if (savedTheme) setTheme(savedTheme);
 </script>
 </body>
 </html>
