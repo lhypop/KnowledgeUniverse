@@ -4,53 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Knowledge Universe — 文献知识宇宙</title>
-<style>
-/* ─── Reset & Base ─── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
---bg:#0f0f0f;--bg2:#1a1a1a;--bg3:#252525;--fg:#e0d5c1;
---fg2:#a09080;--fg3:#706050;--accent:#e8a840;--accent2:#c07830;
---border:#3a3028;--radius:8px;--shadow:0 2px 12px rgba(0,0,0,.4);
---font:'Segoe UI',system-ui,-apple-system,sans-serif;
---green:#60b878;--red:#d05050;--blue:#6098d8;
---card-bg:#1a1a1a;--card-bg2:#252525;
-}
-[data-theme="blue"]{
---bg:#0a1628;--bg2:#12223a;--bg3:#1c3050;--fg:#d0dce8;
---fg2:#8098b8;--fg3:#506080;--accent:#5090d0;--accent2:#3068b0;
---border:#203850;--card-bg:#12223a;--card-bg2:#1c3050;
---green:#50a870;--red:#c86060;--blue:#6098e0;
-}
-[data-theme="forest"]{
---bg:#0f1a10;--bg2:#162818;--bg3:#1e3820;--fg:#c8d8c0;
---fg2:#80a080;--fg3:#506850;--accent:#50b860;--accent2:#309040;
---border:#284828;--card-bg:#162818;--card-bg2:#1e3820;
---green:#40a060;--red:#c05050;--blue:#5098c0;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body class="hidden-scrollbar">
 <div class="app">
-<aside class="sidebar">
-<div class="brand"><span class="icon">🌌</span><span>Knowledge Universe</span></div>
-<nav class="sidebar-nav">
-<button data-tab="papers" class="active">📄 订阅的相关文献</button>
-<button data-tab="journal-subs">📰 期刊订阅</button>
-<button data-tab="keyword-subs">🔑 关键字订阅</button>
-<button data-tab="stats">📊 统计</button>
-</nav>
-<div class="sidebar-footer"><div class="theme-picker" id="theme-picker">
-<button class="t-amber active" data-theme="amber" title="琥珀暗夜"></button>
-<button class="t-blue" data-theme="blue" title="深蓝学术"></button>
-<button class="t-forest" data-theme="forest" title="墨绿经典"></button>
-<button class="t-cyber" data-theme="cyber" title="赛博紫"></button>
-<button class="t-light" data-theme="light" title="极简灰白"></button>
-</div></div>
-</aside>
-<main class="main-content" id="main-content">
-<div id="view-papers"><p style="color:var(--fg2);text-align:center;padding:40px">📄 订阅的相关文献 — 需要本地服务器支持</p></div>
-<div id="view-journal-subs" class="hidden"><p style="color:var(--fg2);text-align:center;padding:40px">📰 期刊订阅 — 需要本地服务器支持</p></div>
-<div id="view-keyword-subs" class="hidden"><p style="color:var(--fg2);text-align:center;padding:40px">🔑 关键字订阅 — 需要本地服务器支持</p></div>
-</main></div>
-<script>document.querySelectorAll('.sidebar-nav button').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.sidebar-nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('[id^="view-"]').forEach(v=>v.classList.add('hidden'));document.getElementById('view-'+btn.dataset.tab).classList.remove('hidden')})});(function(){const s=localStorage.getItem('ku-theme')||'amber';document.documentElement.setAttribute('data-theme',s);document.querySelectorAll('.theme-picker button').forEach(b=>{b.classList.toggle('active',b.dataset.theme===s);b.addEventListener('click',()=>{document.querySelectorAll('.theme-picker button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.documentElement.setAttribute('data-theme',b.dataset.theme);localStorage.setItem('ku-theme',b.dataset.theme)})})})()</script>
-</body></html>
+<aside class="sidebar"><div class="brand"><span class="icon">🌌</span><span>Knowledge Universe</span></div>
+<nav class="sidebar-nav"><button data-tab="papers" class="active">📄 订阅的相关文献</button><button data-tab="journal-subs">📰 期刊订阅</button><button data-tab="keyword-subs">🔑 关键字订阅</button><button data-tab="stats">📊 统计</button></nav>
+<div class="sidebar-footer"><div class="theme-picker" id="theme-picker"><button class="t-amber active" data-theme="amber" title="琥珀暗夜"></button><button class="t-blue" data-theme="blue" title="深蓝学术"></button><button class="t-forest" data-theme="forest" title="墨绿经典"></button><button class="t-cyber" data-theme="cyber" title="赛博紫"></button><button class="t-light" data-theme="light" title="极简灰白"></button></div></div></aside>
+<main class="main-content" id="main-content"><div id="view-papers"></div><div id="view-journal-subs" class="hidden"></div><div id="view-keyword-subs" class="hidden"></div><div id="view-stats" class="hidden"></div></main></div>
+<script src="app.js"></script></body></html>
