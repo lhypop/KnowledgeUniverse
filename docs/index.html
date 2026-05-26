@@ -3,167 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Knowledge Universe — Demo</title>
+<title>Knowledge Universe — 文献知识宇宙</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #0d1117; --bg2: #161b22; --bg3: #21262d; --border: #30363d;
-  --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff; --green: #3fb950;
-  --yellow: #d2991d; --red: #f85149; --purple: #bc8cff; --radius: 8px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.3); --transition: 0.2s ease;
+  --bg: #0c0f14; --bg2: #151922; --bg3: #1e2330; --border: #2a3040;
+  --text: #e2e4e9; --text2: #8a8f9a; --accent: #f0a040; --green: #5cb870;
+  --yellow: #e8b430; --red: #e05560; --purple: #a080d0;
+  --radius: 10px; --shadow: 0 4px 32px rgba(0,0,0,0.5); --transition: 0.2s ease;
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
   background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 15% 5%, rgba(240,160,64,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 95%, rgba(240,160,64,0.03) 0%, transparent 50%);
 }
-a { color: var(--accent); text-decoration: none; }
-.app { max-width: 1200px; margin: 0 auto; padding: 20px; }
+a { color: var(--accent); text-decoration: none; font-weight: 500; }
+a:hover { text-decoration: underline; }
+
+.app { max-width: 1100px; margin: 0 auto; padding: 24px; }
 header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 32px;
+  flex-wrap: wrap; gap: 16px;
 }
-.logo { font-size: 1.5em; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-.logo .icon { font-size: 1.3em; }
-nav { display: flex; gap: 4px; }
+.logo { font-size: 1.4em; font-weight: 700; display: flex; align-items: center; gap: 10px; letter-spacing: -0.02em; }
+.logo .icon { font-size: 1.2em; opacity: 0.9; }
+.logo .accent-dot { color: var(--accent); }
+nav { display: flex; gap: 2px; background: var(--bg2); border-radius: var(--radius); padding: 3px; }
 nav button {
-  background: transparent; border: none; color: var(--text2);
-  padding: 8px 16px; cursor: pointer; border-radius: var(--radius);
-  font-size: 0.9em; transition: var(--transition);
+  background: transparent; border: none; color: var(--text2); padding: 8px 18px;
+  cursor: pointer; border-radius: 7px; font-size: 0.88em; transition: var(--transition);
+  font-weight: 500;
 }
-nav button:hover { color: var(--text); background: var(--bg2); }
-nav button.active { color: var(--accent); background: var(--bg2); }
-.toolbar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-.search-box { flex: 1; min-width: 200px; position: relative; }
-.search-box input {
-  width: 100%; padding: 10px 16px 10px 40px; background: var(--bg2);
-  border: 1px solid var(--border); border-radius: var(--radius);
-  color: var(--text); font-size: 0.95em;
-}
-.search-box .search-icon {
-  position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text2);
-}
-.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.chip {
-  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
-  background: var(--bg2); color: var(--text2); cursor: pointer;
-  font-size: 0.85em; transition: var(--transition); white-space: nowrap;
-}
-.chip:hover { border-color: var(--accent); color: var(--text); }
-.chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.paper-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; margin-bottom: 24px;
-}
-.paper-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; cursor: pointer;
-  transition: all var(--transition); position: relative;
-}
-.paper-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
-.paper-card .card-header {
-  display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;
-}
-.paper-card .title { font-size: 1em; font-weight: 600; line-height: 1.4; }
-.paper-card .star-btn {
-  background: none; border: none; color: var(--yellow); cursor: pointer;
-  font-size: 1.2em; padding: 0 4px; flex-shrink: 0;
-}
-.paper-card .meta {
-  font-size: 0.8em; color: var(--text2); margin-bottom: 8px;
-  display: flex; gap: 8px; flex-wrap: wrap;
-}
-.paper-card .authors { font-size: 0.82em; color: var(--text2); margin-bottom: 6px; }
-.paper-card .summary {
-  font-size: 0.85em; color: var(--text); background: var(--bg3);
-  padding: 10px 12px; border-radius: 6px; margin-top: 8px;
-}
-.paper-card .tags { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
-.paper-card .tag {
-  font-size: 0.75em; padding: 2px 8px; background: var(--bg3);
-  border-radius: 12px; color: var(--purple);
-}
-.badge { font-size: 0.75em; padding: 2px 8px; border-radius: 12px; font-weight: 600; }
-.badge-new { background: rgba(88,166,255,0.15); color: var(--accent); }
-.badge-read { background: rgba(63,185,80,0.15); color: var(--green); }
-.badge-arxiv { background: rgba(188,140,255,0.15); color: var(--purple); }
+nav button:hover { color: var(--text); }
+nav button.active { background: var(--bg3); color: var(--accent); }
 
-/* Modal */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
-}
-.modal {
-  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
-  width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto;
-  padding: 32px; position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-}
-.modal-close {
-  position: absolute; top: 16px; right: 16px; background: var(--bg3);
-  border: none; color: var(--text2); width: 32px; height: 32px;
-  border-radius: 50%; cursor: pointer; font-size: 1.2em;
-}
-.modal-close:hover { color: var(--text); background: var(--border); }
-.modal h2 { font-size: 1.2em; margin-bottom: 12px; line-height: 1.4; }
-.modal .detail-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-.modal .detail-meta span { font-size: 0.85em; color: var(--text2); }
-.modal .abstract {
-  background: var(--bg3); padding: 16px; border-radius: var(--radius);
-  margin-bottom: 16px; font-size: 0.9em; line-height: 1.7;
-}
-.modal .summary-section {
-  background: var(--bg3); padding: 16px; border-radius: var(--radius);
-  margin-bottom: 16px; border-left: 3px solid var(--accent);
-}
-.modal .summary-section h3 { font-size: 0.95em; color: var(--accent); margin-bottom: 8px; }
-.modal .actions { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-.btn {
-  padding: 8px 16px; border-radius: var(--radius); border: 1px solid var(--border);
-  background: var(--bg3); color: var(--text); cursor: pointer; font-size: 0.9em; transition: var(--transition);
-}
-.btn:hover { border-color: var(--accent); }
-.btn.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
-.modal .notes-area {
-  width: 100%; min-height: 80px; background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); color: var(--text); padding: 12px; font-family: inherit; font-size: 0.9em;
-  resize: vertical; margin-bottom: 12px;
-}
-.stats-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;
-}
-.stat-card {
-  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 20px; text-align: center;
-}
-.stat-card .stat-value { font-size: 2em; font-weight: 700; color: var(--accent); }
-.stat-card .stat-label { font-size: 0.85em; color: var(--text2); margin-top: 4px; }
-.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-@media (max-width: 700px) { .chart-row { grid-template-columns: 1fr; } }
-.chart-box {
-  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px;
-}
-.chart-box h3 { font-size: 0.95em; margin-bottom: 12px; color: var(--text2); }
-.bar { display: flex; align-items: center; margin-bottom: 8px; gap: 8px; }
-.bar-label { font-size: 0.85em; width: 100px; text-align: right; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
-.bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.5s ease; }
 .banner {
-  background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(188,140,255,0.1));
-  border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px;
-  margin-bottom: 24px; font-size: 0.9em; color: var(--text2);
+  background: linear-gradient(135deg, rgba(240,160,64,0.08), rgba(240,160,64,0.03));
+  border: 1px solid rgba(240,160,64,0.15); border-radius: var(--radius);
+  padding: 18px 24px; margin-bottom: 28px; font-size: 0.9em; color: var(--text2);
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
 }
-.banner a { color: var(--accent); font-weight: 600; }
-.banner .code { background: var(--bg3); padding: 2px 8px; border-radius: 4px; font-family: monospace; color: var(--green); }
+.banner .icon { font-size: 1.4em; }
+.banner .code {
+  background: var(--bg3); padding: 3px 10px; border-radius: 5px;
+  font-family: 'SF Mono', 'Fira Code', monospace; color: var(--accent); font-size: 0.9em;
+}
+
+.empty-state { text-align: center; padding: 80px 24px; }
+.empty-state .empty-icon { font-size: 4em; margin-bottom: 20px; opacity: 0.6; }
+.empty-state h3 { font-size: 1.2em; margin-bottom: 8px; font-weight: 600; }
+.empty-state p { color: var(--text2); font-size: 0.9em; max-width: 460px; margin: 0 auto 6px; }
+
+.features {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px; margin-top: 40px; margin-bottom: 24px;
+}
+.feature-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; transition: var(--transition);
+}
+.feature-card:hover { border-color: var(--accent); }
+.feature-card .feat-icon { font-size: 1.8em; margin-bottom: 12px; }
+.feature-card .feat-title { font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
+.feature-card .feat-desc { font-size: 0.82em; color: var(--text2); line-height: 1.5; }
+
+.preview-section { margin-top: 40px; }
+.preview-section h3 { font-size: 0.95em; color: var(--text2); margin-bottom: 16px; font-weight: 500; }
+.preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.preview-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; transition: var(--transition);
+}
+.preview-card:hover { border-color: var(--accent); }
+.preview-card .prev-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.preview-card .prev-title { font-weight: 600; font-size: 0.9em; line-height: 1.4; }
+.preview-card .prev-meta { font-size: 0.78em; color: var(--text2); margin-bottom: 6px; display: flex; gap: 8px; }
+.preview-card .prev-authors { font-size: 0.8em; color: var(--text2); margin-bottom: 8px; }
+.preview-card .prev-summary { font-size: 0.82em; background: var(--bg3); padding: 10px 12px; border-radius: 6px; color: var(--text); line-height: 1.5; }
+.badge { font-size: 0.72em; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.badge-new { background: rgba(240,160,64,0.15); color: var(--accent); }
+.badge-read { background: rgba(92,184,112,0.15); color: var(--green); }
+.badge-arxiv { background: rgba(160,128,208,0.15); color: var(--purple); }
+.tag { font-size: 0.72em; padding: 2px 8px; background: var(--bg3); border-radius: 10px; color: var(--purple); }
+
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 16px; }
+.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
+.stat-card .stat-val { font-size: 1.8em; font-weight: 700; color: var(--accent); }
+.stat-card .stat-label { font-size: 0.8em; color: var(--text2); margin-top: 4px; }
+
+.footer { text-align: center; padding: 40px 0 20px; color: var(--text2); font-size: 0.82em; border-top: 1px solid var(--border); margin-top: 48px; }
+
 .hidden { display: none !important; }
-.empty { text-align: center; padding: 60px 20px; color: var(--text2); }
-.empty .empty-icon { font-size: 3em; margin-bottom: 16px; }
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+.live-dot { display: inline-block; width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; margin-right: 6px; }
 </style>
 </head>
 <body>
-<div class="app" id="app">
+<div class="app">
   <header>
-    <div class="logo"><span class="icon">🌌</span><span>Knowledge Universe</span></div>
+    <div class="logo">
+      <span class="icon">🌌</span>
+      <span>Knowledge <span class="accent-dot">Universe</span></span>
+    </div>
     <nav>
       <button data-tab="papers" class="active">📄 论文库</button>
       <button data-tab="subscriptions">📡 订阅</button>
@@ -172,211 +120,86 @@ nav button.active { color: var(--accent); background: var(--bg2); }
   </header>
 
   <div class="banner">
-    ⚡ <strong>Demo 模式</strong> — 这是静态预览版。完整功能请克隆仓库后运行 <span class="code">python server.py</span>，访问 <span class="code">http://localhost:8900</span>。
-    <a href="https://github.com/lhypop/KnowledgeUniverse" target="_blank">GitHub →</a>
+    <span class="icon">⚡</span>
+    <span>这是 <strong>静态预览版</strong>。完整功能请运行 <span class="code">python server.py</span>，或查看 <a href="https://github.com/lhypop/KnowledgeUniverse" target="_blank">GitHub</a></span>
   </div>
 
   <div id="view-papers">
-    <div class="toolbar">
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="paper-search" placeholder="搜索论文..." />
-      </div>
-      <div class="filter-chips" id="status-chips">
-        <button class="chip active" data-status="">全部</button>
-        <button class="chip" data-status="new">未读</button>
-        <button class="chip" data-status="read">已读</button>
-        <button class="chip" data-status="starred">⭐ 收藏</button>
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>文献库为空</h3>
+      <p>启动本地服务后，添加 arXiv 订阅即可自动获取论文</p>
+    </div>
+
+    <div class="features">
+      <div class="feature-card"><div class="feat-icon">📄</div><div class="feat-title">文献获取</div><div class="feat-desc">支持关键词、分类、作者三种订阅方式，自动从 arXiv 拉取</div></div>
+      <div class="feature-card"><div class="feat-icon">🤖</div><div class="feat-title">AI 总结</div><div class="feat-desc">LLM 自动生成中文摘要和关键发现</div></div>
+      <div class="feature-card"><div class="feat-icon">🔗</div><div class="feat-title">关联组织</div><div class="feat-desc">论文间建立引用/构建关系，形成知识图谱</div></div>
+      <div class="feature-card"><div class="feat-icon">📝</div><div class="feat-title">Obsidian 集成</div><div class="feat-desc">一键导出论文笔记到 Obsidian Vault</div></div>
+    </div>
+
+    <div class="preview-section">
+      <h3>📄 论文库界面预览</h3>
+      <div class="preview-grid">
+        <div class="preview-card">
+          <div class="prev-header"><div class="prev-title">Attention Is All You Need</div><span style="color:var(--accent)">⭐</span></div>
+          <div class="prev-meta"><span class="badge badge-read">已读</span><span class="badge badge-arxiv">cs.CL</span><span>2017-06-12</span><span>引用 138K</span></div>
+          <div class="prev-authors">Ashish Vaswani, Noam Shazeer, Niki Parmar et al.</div>
+          <div class="prev-summary">提出 Transformer 架构，完全基于注意力机制。在机器翻译任务上达到 SOTA，训练速度大幅提升。</div>
+          <div style="margin-top:8px"><span class="tag">Transformer</span> <span class="tag">NLP</span></div>
+        </div>
+        <div class="preview-card">
+          <div class="prev-header"><div class="prev-title">LLaMA: Open and Efficient Foundation Language Models</div><span style="color:var(--accent)">⭐</span></div>
+          <div class="prev-meta"><span class="badge badge-read">已读</span><span class="badge badge-arxiv">cs.CL</span><span>2023-02-27</span><span>引用 15K</span></div>
+          <div class="prev-authors">Hugo Touvron, Thibaut Lavril, Gautier Izacard et al.</div>
+          <div class="prev-summary">Meta 开源的 LLaMA 系列。13B 的 LLaMA 在多数 benchmark 上超越 GPT-3 175B。</div>
+          <div style="margin-top:8px"><span class="tag">LLaMA</span> <span class="tag">开源</span></div>
+        </div>
+        <div class="preview-card">
+          <div class="prev-header"><div class="prev-title">Chain-of-Thought Prompting Elicits Reasoning</div><span style="opacity:0.3">☆</span></div>
+          <div class="prev-meta"><span class="badge badge-read">已读</span><span class="badge badge-arxiv">cs.CL</span><span>2022-01-28</span><span>引用 9.8K</span></div>
+          <div class="prev-authors">Jason Wei, Xuezhi Wang, Dale Schuurmans et al.</div>
+          <div class="prev-summary">提出思维链提示方法，显著提升 LLM 在算术和推理任务上的表现。</div>
+          <div style="margin-top:8px"><span class="tag">CoT</span> <span class="tag">推理</span></div>
+        </div>
       </div>
     </div>
-    <div class="paper-grid" id="paper-grid"></div>
   </div>
 
   <div id="view-subscriptions" class="hidden">
-    <div class="banner" style="margin-bottom:16px">
-      📡 订阅管理需要后端服务支持。查看已有的 4 个活跃订阅：
+    <div class="empty-state"><div class="empty-icon">📡</div><h3>订阅管理</h3><p>添加 arXiv 订阅后可自动追踪最新论文</p></div>
+    <div class="features">
+      <div class="feature-card"><div class="feat-icon">🔍</div><div class="feat-title">关键词</div><div class="feat-desc">"reinforcement learning", "large language model"</div></div>
+      <div class="feature-card"><div class="feat-icon">📂</div><div class="feat-title">分类</div><div class="feat-desc">cs.AI / cs.CL / cs.LG / cs.CV</div></div>
+      <div class="feature-card"><div class="feat-icon">✍️</div><div class="feat-title">作者</div><div class="feat-desc">追踪特定研究者的最新论文</div></div>
+      <div class="feature-card"><div class="feat-icon">🔄</div><div class="feat-title">定时扫描</div><div class="feat-desc">每天自动扫描，新论文自动入库</div></div>
     </div>
-    <div id="sub-grid"></div>
   </div>
 
-  <div id="view-stats" class="hidden"></div>
-
-  <div class="modal-overlay hidden" id="modal-overlay">
-    <div class="modal" id="modal-content"></div>
+  <div id="view-stats" class="hidden">
+    <div class="empty-state"><div class="empty-icon">📊</div><h3>统计分析</h3><p>启动本地服务后查看实时数据</p></div>
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">总论文</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">未读</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">已收藏</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">已读</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">活跃订阅</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">平均引用</div></div>
+    </div>
   </div>
+
+  <div class="footer"><span class="live-dot"></span> 本地完整版 · <a href="https://github.com/lhypop/KnowledgeUniverse">GitHub</a> · python server.py → localhost:8900</div>
 </div>
 
 <script>
-// Mock data
-var MOCK = {
-  papers: [
-    {id:1, arxiv_id:"2605.15842", title:"Attention Is All You Need", authors:["Ashish Vaswani","Noam Shazeer","Niki Parmar","Jakob Uszkoreit","Llion Jones","Aidan N. Gomez","Łukasz Kaiser","Illia Polosukhin"], published_date:"2017-06-12", primary_category:"cs.CL", citation_count:138000, status:"read", is_starred:1, rating:5, summary_cn:"提出了 Transformer 架构，完全基于注意力机制，摒弃了循环和卷积。在机器翻译任务上达到 SOTA，训练速度大幅提升。核心创新：多头自注意力、位置编码、残差连接。", tags:["Transformer","Attention","NLP","里程碑"], pdf_url:"https://arxiv.org/pdf/1706.03762", abs_url:"https://arxiv.org/abs/1706.03762", abstract:"The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.", key_findings:["自注意力机制可以完全替代 RNN","训练并行化，速度快 10x+","在 WMT 2014 英德翻译达到 28.4 BLEU"], relations:[]},
-    {id:2, arxiv_id:"2203.15556", title:"Training Compute-Optimal Large Language Models", authors:["Jordan Hoffmann","Sebastian Borgeaud","Arthur Mensch","Elena Buchatskaya","Trevor Cai","Eliza Rutherford","Diego de Las Casas","Lisa Anne Hendricks","Johannes Welbl","Aidan Clark","Tom Hennigan","Eric Noland","Katie Millican","George van den Driessche","Bogdan Damoc","Aurelia Guy","Simon Osindero","Karen Simonyan","Erich Elsen","Jack W. Rae","Oriol Vinyals","Laurent Sifre"], published_date:"2022-03-29", primary_category:"cs.CL", citation_count:4200, status:"read", is_starred:1, rating:5, summary_cn:"提出 Chinchilla 缩放定律：模型参数和训练数据应等比例缩放，而非仅增大模型。70B 参数的 Chinchilla 在 1.4T tokens 上训练，性能超越 280B 的 Gopher。", tags:["Scaling Law","LLM","Chinchilla","训练优化"], pdf_url:"https://arxiv.org/pdf/2203.15556", abs_url:"https://arxiv.org/abs/2203.15556", abstract:"We investigate the optimal model size and number of tokens for training a transformer language model under a given compute budget. We find that current large language models are significantly undertrained.", key_findings:["模型大小和数据量应等比例增长","Chinchilla 70B 超越 Gopher 280B","当前大模型普遍训练不足"], relations:[{related_paper_id:1, relation_type:"builds_on", strength:0.9, related_title:"Attention Is All You Need"}]},
-    {id:3, arxiv_id:"2302.13971", title:"LLaMA: Open and Efficient Foundation Language Models", authors:["Hugo Touvron","Thibaut Lavril","Gautier Izacard","Xavier Martinet","Marie-Anne Lachaux","Timothée Lacroix","Baptiste Rozière","Naman Goyal","Eric Hambro","Faisal Azhar","Aurelien Rodriguez","Armand Joulin","Edouard Grave","Guillaume Lample"], published_date:"2023-02-27", primary_category:"cs.CL", citation_count:15000, status:"read", is_starred:1, rating:5, summary_cn:"Meta 开源的 LLaMA 系列，从 7B 到 65B 参数，仅使用公开数据训练。13B 的 LLaMA 在多数 benchmark 上超越 GPT-3 175B，开启了开源 LLM 时代。", tags:["LLaMA","开源","LLM","Meta"], pdf_url:"https://arxiv.org/pdf/2302.13971", abs_url:"https://arxiv.org/abs/2302.13971", abstract:"We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively.", key_findings:["仅用公开数据训练出 SOTA 模型","LLaMA-13B 超越 GPT-3 175B","Chinchilla 缩放定律验证"], relations:[{related_paper_id:2, relation_type:"builds_on", strength:0.85, related_title:"Training Compute-Optimal Large Language Models"}]},
-    {id:4, arxiv_id:"2201.11903", title:"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models", authors:["Jason Wei","Xuezhi Wang","Dale Schuurmans","Maarten Bosma","Brian Ichter","Fei Xia","Ed Chi","Quoc Le","Denny Zhou"], published_date:"2022-01-28", primary_category:"cs.CL", citation_count:9800, status:"read", is_starred:1, rating:5, summary_cn:"提出思维链 (Chain-of-Thought) 提示方法，通过在 prompt 中提供中间推理步骤，显著提升 LLM 在算术、常识和符号推理任务上的表现。", tags:["CoT","Prompting","推理","LLM"], pdf_url:"https://arxiv.org/pdf/2201.11903", abs_url:"https://arxiv.org/abs/2201.11903", abstract:"We explore how generating a chain of thought—a series of intermediate reasoning steps—significantly improves the ability of large language models to perform complex reasoning.", key_findings:["CoT 在数学推理上提升 2-3x","中间推理步骤是关键","Few-shot CoT 效果最佳"], relations:[]},
-    {id:5, arxiv_id:"2005.14165", title:"Language Models are Few-Shot Learners", authors:["Tom B. Brown","Benjamin Mann","Nick Ryder","Melanie Subbiah","Jared Kaplan","Prafulla Dhariwal","Arvind Neelakantan","Pranav Shyam","Girish Sastry","Amanda Askell","Sandhini Agarwal","Ariel Herbert-Voss","Gretchen Krueger","Tom Henighan","Rewon Child","Aditya Ramesh","Daniel M. Ziegler","Jeffrey Wu","Clemens Winter","Christopher Hesse","Mark Chen","Eric Sigler","Mateusz Litwin","Scott Gray","Benjamin Chess","Jack Clark","Christopher Berner","Sam McCandlish","Alec Radford","Ilya Sutskever","Dario Amodei"], published_date:"2020-05-28", primary_category:"cs.CL", citation_count:45000, status:"read", is_starred:1, rating:5, summary_cn:"GPT-3：175B 参数的语言模型，展示出强大的 few-shot 学习能力，无需微调即可完成翻译、问答、文章生成等任务。彻底改变了 NLP 领域。", tags:["GPT-3","Few-shot","LLM","OpenAI"], pdf_url:"https://arxiv.org/pdf/2005.14165", abs_url:"https://arxiv.org/abs/2005.14165", abstract:"We demonstrate that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art fine-tuning approaches.", key_findings:["175B 参数实现强大的 few-shot 学习","无需微调即可泛化到新任务","规模是关键因素"], relations:[]},
-    {id:6, arxiv_id:"2305.20050", title:"Let's Verify Step by Step", authors:["Hunter Lightman","Vineet Kosaraju","Yura Burda","Harri Edwards","Bowen Baker","Teddy Lee","Jan Leike","John Schulman","Ilya Sutskever","Karl Cobbe"], published_date:"2023-05-31", primary_category:"cs.LG", citation_count:1200, status:"new", is_starred:0, rating:0, summary_cn:"提出过程监督 (Process Supervision) 方法，对推理的每一步进行验证，而非仅验证最终结果。在 MATH 数据集上达到 78.2% 的准确率。", tags:["Process Reward","RLHF","推理","数学"], pdf_url:"https://arxiv.org/pdf/2305.20050", abs_url:"https://arxiv.org/abs/2305.20050", abstract:"We investigate outcome-supervised and process-supervised reward models for mathematical reasoning. We find that process supervision significantly outperforms outcome supervision for training models to solve challenging problems from the MATH dataset.", key_findings:["过程监督优于结果监督","MATH 准确率从 50% 提升到 78%","每步标注是可行的"], relations:[]},
-    {id:7, arxiv_id:"2307.09288", title:"Llama 2: Open Foundation and Fine-Tuned Chat Models", authors:["Hugo Touvron","Louis Martin","Kevin Stone","Peter Albert","Amjad Almahairi","Yasmine Babaei","Nikolay Bashlykov","Soumya Batra","Prajjwal Bhargava","Shruti Bhosale","Dan Bikel","Lukas Blecher","Cristian Canton Ferrer","Moya Chen","Guillem Cucurull","David Esiobu","Jude Fernandes","Jeremy Fu","Wenyin Fu","Brian Fuller","Cynthia Gao","Vedanuj Goswami","Naman Goyal","Anthony Hartshorn","Saghar Hosseini","Rui Hou","Hakan Inan","Marcin Kardas","Viktor Kerkez","Madian Khabsa","Isabel Kloumann","Artem Korenev","Punit Singh Koura","Marie-Anne Lachaux","Thibaut Lavril","Jenya Lee","Diana Liskovich","Yinghai Lu","Yuning Mao","Xavier Martinet","Todor Mihaylov","Pushkar Mishra","Igor Molybog","Yixin Nie","Andrew Poulton","Jeremy Reizenstein","Rashi Rungta","Kalyan Saladi","Alan Schelten","Ruan Silva","Eric Michael Smith","Ranjan Subramanian","Xiaoqing Ellen Tan","Binh Tang","Ross Taylor","Adina Williams","Jian Xiang Kuan","Puxin Xu","Zheng Yan","Iliyan Zarov","Yuchen Zhang","Angela Fan","Melanie Kambadur","Sharan Narang","Aurelien Rodriguez","Robert Stojnic","Sergey Edunov","Thomas Scialom"], published_date:"2023-07-18", primary_category:"cs.CL", citation_count:18000, status:"new", is_starred:0, rating:0, summary_cn:"Meta 发布的 Llama 2，从 7B 到 70B 参数，使用 2T tokens 训练。引入 RLHF 微调的对话版本，在有用性和安全性上显著提升。开源可商用。", tags:["Llama 2","开源","RLHF","LLM"], pdf_url:"https://arxiv.org/pdf/2307.09288", abs_url:"https://arxiv.org/abs/2307.09288", abstract:"We develop and release Llama 2, a collection of pretrained and fine-tuned large language models ranging from 7 billion to 70 billion parameters.", key_findings:["开源可商用的 SOTA 模型","RLHF 提升安全性和有用性","70B 接近 GPT-3.5 水平"], relations:[{related_paper_id:3, relation_type:"successor", strength:1.0, related_title:"LLaMA: Open and Efficient Foundation Language Models"}]},
-    {id:8, arxiv_id:"2106.09685", title:"LoRA: Low-Rank Adaptation of Large Language Models", authors:["Edward J. Hu","Yelong Shen","Phillip Wallis","Zeyuan Allen-Zhu","Yuanzhi Li","Shean Wang","Lu Wang","Weizhu Chen"], published_date:"2021-06-17", primary_category:"cs.CL", citation_count:12000, status:"read", is_starred:1, rating:4, summary_cn:"提出 LoRA (Low-Rank Adaptation)，通过低秩矩阵分解实现参数高效微调。冻结预训练权重，仅训练低秩矩阵，减少 10000x 可训练参数。", tags:["LoRA","PEFT","微调","高效训练"], pdf_url:"https://arxiv.org/pdf/2106.09685", abs_url:"https://arxiv.org/abs/2106.09685", abstract:"We propose Low-Rank Adaptation (LoRA), which freezes the pretrained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture.", key_findings:["低秩矩阵替代全参数微调","可训练参数减少 10000x","无推理延迟增加"], relations:[]},
-  ],
-  subs: [
-    {id:1, name:"AI前沿", type:"topic", query:"artificial intelligence", source:"arxiv", active:1, last_scan:"2026-05-26", max_results:5, frequency:"daily"},
-    {id:2, name:"大语言模型", type:"topic", query:"large language model", source:"arxiv", active:1, last_scan:"2026-05-26", max_results:5, frequency:"daily"},
-    {id:3, name:"强化学习", type:"topic", query:"reinforcement learning", source:"arxiv", active:1, last_scan:"—", max_results:5, frequency:"daily"},
-    {id:4, name:"cs.AI最新", type:"category", query:"cs.AI", source:"arxiv", active:1, last_scan:"2026-05-26", max_results:5, frequency:"daily"},
-  ]
-};
-
-var currentTab = 'papers', currentFilter = {status: '', search: ''};
-var allPapers = MOCK.papers;
-
-function esc(s) {
-  if (!s) return '';
-  var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
-}
-
-// Nav
 document.querySelectorAll('nav button').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('nav button').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    currentTab = btn.dataset.tab;
     document.querySelectorAll('[id^="view-"]').forEach(function(v) { v.classList.add('hidden'); });
-    document.getElementById('view-' + currentTab).classList.remove('hidden');
-    if (currentTab === 'papers') renderPapers();
-    if (currentTab === 'subscriptions') renderSubs();
-    if (currentTab === 'stats') renderStats();
+    document.getElementById('view-' + btn.dataset.tab).classList.remove('hidden');
   });
 });
-
-function getFiltered() {
-  var papers = allPapers.slice();
-  if (currentFilter.status === 'starred') papers = papers.filter(function(p) { return p.is_starred; });
-  else if (currentFilter.status) papers = papers.filter(function(p) { return p.status === currentFilter.status; });
-  if (currentFilter.search) {
-    var q = currentFilter.search.toLowerCase();
-    papers = papers.filter(function(p) {
-      return (p.title || '').toLowerCase().indexOf(q) >= 0 || (p.abstract || '').toLowerCase().indexOf(q) >= 0;
-    });
-  }
-  return papers;
-}
-
-function renderPapers() {
-  var papers = getFiltered();
-  var grid = document.getElementById('paper-grid');
-  if (papers.length === 0) {
-    grid.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>没有找到匹配的论文</p></div>';
-    return;
-  }
-  grid.innerHTML = papers.map(function(p) {
-    var authors = (p.authors || []).slice(0, 3).join(', ') + ((p.authors||[]).length > 3 ? ' et al.' : '');
-    var tags = p.tags || [];
-    var s = '<div class="paper-card" onclick="showDetail(' + p.id + ')">';
-    s += '<div class="card-header"><div class="title">' + esc(p.title) + '</div><button class="star-btn">⭐</button></div>';
-    s += '<div class="meta">';
-    s += '<span class="badge badge-' + (p.status === 'new' ? 'new' : 'read') + '">' + (p.status === 'new' ? '未读' : '已读') + '</span>';
-    if (p.primary_category) s += '<span class="badge badge-arxiv">' + esc(p.primary_category) + '</span>';
-    s += '<span>' + (p.published_date || '') + '</span>';
-    if (p.citation_count) s += '<span>引用 ' + p.citation_count.toLocaleString() + '</span>';
-    s += '</div>';
-    if (authors) s += '<div class="authors">' + esc(authors) + '</div>';
-    if (p.summary_cn) s += '<div class="summary">' + esc(p.summary_cn) + '</div>';
-    if (tags.length) s += '<div class="tags">' + tags.map(function(t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>';
-    s += '</div>';
-    return s;
-  }).join('');
-}
-
-function showDetail(id) {
-  var p = allPapers.find(function(x) { return x.id === id; });
-  if (!p) return;
-  var overlay = document.getElementById('modal-overlay');
-  var content = document.getElementById('modal-content');
-  overlay.classList.remove('hidden');
-  var authors = (p.authors || []).join(', ');
-  var tags = p.tags || [];
-  var findings = p.key_findings || [];
-  var rels = p.relations || [];
-  content.innerHTML = '<button class="modal-close" onclick="closeModal()">✕</button>' +
-    '<h2>' + esc(p.title) + '</h2>' +
-    '<div class="detail-meta">' +
-    '<span>📅 ' + (p.published_date || '未知') + '</span>' +
-    '<span>📂 ' + esc(p.primary_category || '') + '</span>' +
-    '<span>📑 arXiv: ' + esc(p.arxiv_id || '') + '</span>' +
-    '<span>📊 引用: ' + (p.citation_count || 0).toLocaleString() + '</span>' +
-    (p.rating ? '<span>⭐ ' + p.rating + '/5</span>' : '') + '</div>' +
-    (authors ? '<p style="color:var(--text2);margin-bottom:12px;font-size:0.9em">✍️ ' + esc(authors) + '</p>' : '') +
-    '<div class="abstract"><strong>摘要</strong><br>' + esc(p.abstract || '暂无') + '</div>' +
-    (p.summary_cn ? '<div class="summary-section"><h3>🤖 AI 总结</h3><p>' + esc(p.summary_cn) + '</p>' + (findings.length ? '<p style="margin-top:8px;font-size:0.85em;color:var(--green)">关键发现: ' + findings.map(esc).join('；') + '</p>' : '') + '</div>' : '') +
-    '<div class="actions">' +
-    '<button class="btn accent">⭐ ' + (p.is_starred ? '已收藏' : '收藏') + '</button>' +
-    '<button class="btn">✅ ' + (p.status === 'new' ? '标记已读' : '已读') + '</button>' +
-    (p.pdf_url ? '<a href="' + esc(p.pdf_url) + '" target="_blank" class="btn">📄 PDF</a>' : '') +
-    (p.abs_url ? '<a href="' + esc(p.abs_url) + '" target="_blank" class="btn">🔗 arXiv</a>' : '') +
-    '</div>' +
-    (tags.length ? '<div style="margin-bottom:12px"><strong style="font-size:0.9em;color:var(--text2)">标签:</strong> ' + tags.map(function(t) { return '<span class="tag">' + esc(t) + '</span>'; }).join(' ') + '</div>' : '') +
-    (rels.length ? '<div style="margin-top:20px"><h3 style="font-size:0.95em;margin-bottom:10px;color:var(--text2)">🔗 关联论文 (' + rels.length + ')</h3>' + rels.map(function(r) { return '<div style="padding:8px;background:var(--bg3);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:0.85em" onclick="showDetail(' + r.related_paper_id + ')">' + esc(r.related_title || 'Untitled') + ' <span style="color:var(--text2)">— ' + r.relation_type + '</span></div>'; }).join('') + '</div>' : '');
-}
-
-function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
-document.getElementById('modal-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-
-document.getElementById('paper-search').addEventListener('input', function() {
-  currentFilter.search = this.value; renderPapers();
-});
-
-document.querySelectorAll('#status-chips .chip').forEach(function(c) {
-  c.addEventListener('click', function() {
-    document.querySelectorAll('#status-chips .chip').forEach(function(x) { x.classList.remove('active'); });
-    c.classList.add('active'); currentFilter.status = c.dataset.status; renderPapers();
-  });
-});
-
-function renderSubs() {
-  document.getElementById('sub-grid').innerHTML = MOCK.subs.map(function(s) {
-    return '<div class="paper-card" style="margin-bottom:12px">' +
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">' +
-      '<div><div style="font-weight:600">' + esc(s.name) + '</div><span style="font-size:0.8em;color:var(--purple)">' + esc(s.type) + '</span></div>' +
-      '<span style="font-size:0.8em;color:var(--green)">● 活跃</span></div>' +
-      '<div style="font-size:0.85em;color:var(--text2);margin-bottom:8px">🔍 ' + esc(s.query) + '</div>' +
-      '<div style="font-size:0.8em;color:var(--text2)">来源: ' + esc(s.source) + ' · 每次 ' + s.max_results + ' 篇 · ' + s.frequency + '<br>上次扫描: ' + (s.last_scan || '—') + '</div></div>';
-  }).join('');
-}
-
-function renderStats() {
-  var papers = allPapers;
-  var newCount = papers.filter(function(p) { return p.status === 'new'; }).length;
-  var readCount = papers.filter(function(p) { return p.status === 'read'; }).length;
-  var starred = papers.filter(function(p) { return p.is_starred; }).length;
-  var avgCite = Math.round(papers.reduce(function(s,p) { return s + (p.citation_count||0); }, 0) / papers.length);
-
-  // Categories
-  var catMap = {};
-  papers.forEach(function(p) { var c = p.primary_category || 'Unknown'; catMap[c] = (catMap[c]||0) + 1; });
-  var cats = Object.entries(catMap).sort(function(a,b) { return b[1] - a[1]; });
-  var maxCat = cats[0] ? cats[0][1] : 1;
-
-  document.getElementById('view-stats').innerHTML =
-    '<div class="stats-grid">' +
-    '<div class="stat-card"><div class="stat-value">' + papers.length + '</div><div class="stat-label">总论文</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + newCount + '</div><div class="stat-label">未读</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + starred + '</div><div class="stat-label">已收藏</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + readCount + '</div><div class="stat-label">已读</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + MOCK.subs.length + '</div><div class="stat-label">活跃订阅</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + avgCite.toLocaleString() + '</div><div class="stat-label">平均引用</div></div>' +
-    '</div>' +
-    '<div class="chart-box" style="margin-bottom:16px"><h3>📂 分类分布</h3>' +
-    cats.map(function(c) {
-      return '<div class="bar"><div class="bar-label">' + esc(c[0]) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + Math.max(5, c[1]/maxCat*100) + '%"></div></div><span style="font-size:0.8em;color:var(--text2)">' + c[1] + '</span></div>';
-    }).join('') + '</div>' +
-    '<div class="banner" style="text-align:center;margin-top:24px">' +
-    '🔧 <strong>完整版功能</strong>（实时数据、订阅扫描、Obsidian 导出、AI 总结）请<a href="https://github.com/lhypop/KnowledgeUniverse" target="_blank">查看 GitHub</a> 或运行 <span class="code">python server.py</span>' +
-    '</div>';
-}
-
-renderPapers();
 </script>
 </body>
 </html>
